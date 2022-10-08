@@ -20,7 +20,7 @@ function TabPanel(props) {
       {...other}
     >
       {value === index && (
-        <Box style={{ position: 'absolute', left: "20%", backgroundColor: '#404755' }}>
+        <Box style={{ position: 'absolute', left: "20%", backgroundColor: '#404755', height: "100vh",width: "80%"}}>
           <div>{children}</div>
         </Box>
       )}
