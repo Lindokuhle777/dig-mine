@@ -22,7 +22,7 @@ function TabPanel(props) {
       {...other}
     >
       {value === index && (
-        <Box style={{ position: 'absolute', left: "20%", backgroundColor: '#404755', height: "100vh",width: "80%"}}>
+        <Box style={{ position: 'absolute', left: "20%", backgroundColor: '#404755', height: "100vh",width: "80%",overflowY:"auto"}}>
           <div>
             <SearchAppBar/>
             {children}
@@ -46,15 +46,25 @@ function a11yProps(index) {
   };
 }
 
+
+
 export default function VerticalTabs() {
   const [value, setValue] = React.useState(0);
+  const [isFeed, setIsFeed] = React.useState(true);
 
   const handleChange = (event, newValue) => {
+    console.log(newValue);
+    if(newValue===0) setIsFeed(true);
     setValue(newValue);
   };
 
+  const openOne = (curr)=>{
+
+  }
+
   return (
     <div
+    style={{ backgroundColor:"#787a7c"}}
     >
       <div style={{ position: 'fixed', margin: 0, left: 0, width: "19.9%", backgroundColor: '#404755', height: "100vh"}}>
         <div style={{ display: 'flex', flexDirection: 'row' }}>
@@ -68,7 +78,7 @@ export default function VerticalTabs() {
           aria-label="Vertical tabs example"
           style={{ position: 'absolute', margin: 0, left: 0, width: "100%", height: "100vh" }}
         >
-          <Tab label="Home" {...a11yProps(0)} />
+          <Tab label="Home" {...a11yProps(0)}/>
           <Tab label="Packages" {...a11yProps(1)} />
           <Tab label="Tags" {...a11yProps(2)} />
         </Tabs>
@@ -78,7 +88,7 @@ export default function VerticalTabs() {
         
 
       <TabPanel value={value} index={0}>
-        <Feed />
+        <Feed isFeed={isFeed} setIsFeed={setIsFeed}/>
       </TabPanel>
       <TabPanel value={value} index={1}>
         <Package />
