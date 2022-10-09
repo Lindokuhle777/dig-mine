@@ -4,10 +4,10 @@ import { Paper } from "@mui/material";
 import React, {useState} from "react";
 import image from '../assets/mine.jpeg';
 
-const Card = () => {
+const Card = ({data, setView, setIntel}) => {
 
     const [like, setLike] = useState(false);
-    const [likeCounter, setLikeCounter] = useState(23);
+    const [likeCounter, setLikeCounter] = useState(data.likes);
 
     const onLike = ()=>{
         if(!like){
@@ -18,11 +18,16 @@ const Card = () => {
         setLike(!like);
     }
 
+    const onView = ()=>{
+        setIntel(data);
+        setView(true);
+    }
+
     return (
         <Paper style = {styles.Main} elevation = {6}>
-            <img src= {image} alt="Icon" width={260} height = {150} style = {{borderTopLeftRadius: 15, borderTopRightRadius: 15}}/>
+            <img src= {image} alt="Icon" width={260} height = {150} style = {{borderTopLeftRadius: 15, borderTopRightRadius: 15}} onClick = {()=> onView()}/>
             <div style = {styles.Content}>
-            <p style = {{margin: 0, color: 'white'}}>Title</p>
+            <p style = {{margin: 0, color: 'white'}}>{data.title}</p>
             <p style = {{margin: 0, color: 'white', fontSize: 10, marginTop: 2}}>Last updated 12/06/2022</p>
 
             <div style = {{display: 'flex', flexDirection: 'row', alignItems: 'center', marginTop: 5, justifyContent: 'space-between'}}>
@@ -53,7 +58,8 @@ const styles = {
         borderRadius: 15,
         minWidth: 260,
         width: 260,
-        marginLeft: 15
+        marginRight: 15,
+        marginTop: 15
     },
     Content:{
         display: 'flex',

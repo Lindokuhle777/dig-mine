@@ -6,19 +6,20 @@ import TabContext from '@mui/lab/TabContext';
 import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
 
-const ShowBoreHole = ()=>{
+const ShowBoreHole = (props)=>{
     return(
         <div>
-            <p style = {{margin: 0, color: 'white'}}>ID</p>
-            <p style = {{margin: 0, color: 'white'}}>Type: Drill / Exploration</p>
-            <p style = {{margin: 0, color: 'white'}}>Depth</p>
-            <p style = {{margin: 0, color: 'white'}}>Essay data</p>
+            <p style = {{margin: 0, color: 'white'}}>ID: {props.id}</p>
+            <p style = {{margin: 0, color: 'white'}}>Type: {props.type}</p>
+            <p style = {{margin: 0, color: 'white'}}>Depth: {props.depth}</p>
+            <p style = {{margin: 0, color: 'white'}}>Essay: {props.essay}</p>
         </div>
     );
 }
 
 
-function ViewPackage() {
+function ViewPackage({intel}) {
+    let source = "https://embed.waze.com/iframe?zoom=14&lat=" + intel.coordinateX + "&lon=" + intel.coordinateY + "&ct=livemap";
     const [value, setValue] = useState("1");
     const handleChange = (event, newValue) => {
         setValue(newValue);
@@ -26,7 +27,7 @@ function ViewPackage() {
   return (
     <div style = {styles.Main}>
         <div style = {styles.Top}>
-        <p style = {{margin: 0, color: 'white', fontSize: 25}}>Package Name</p>
+        <p style = {{margin: 0, color: 'white', fontSize: 25}}>{intel.title}</p>
         <div style={styles.DownloadBtn}>
             <DownloadIcon sx = {{color: 'white'}}/>
             <p style = {{margin:0, color: 'white', fontWeight: 'w800'}}>Download</p>
@@ -44,20 +45,31 @@ function ViewPackage() {
           </TabList>
         </Box>
         <TabPanel value="1">
-            <p style = {{margin: 0, color: 'white'}}>Mine Name</p>
-            <p style = {{margin: 0, color: 'white'}}>Status: operational/closed</p>
-            <p style = {{margin: 0, color: 'white'}}>Production</p>
-            <p style = {{margin: 0, color: 'white'}}>Nearest Town</p>
+            <p style = {{margin: 0, color: 'white'}}>Mine Name: {intel.mineName}</p>
+            <p style = {{margin: 0, color: 'white'}}>Status: {intel.status}</p>
+            <p style = {{margin: 0, color: 'white'}}>Production: {intel.production}</p>
+            <p style = {{margin: 0, color: 'white'}}>Nearest Town: {intel.nearestTown}</p>
             <p style = {{margin: 0, color: 'white'}}>Geographical Coordinates</p>
-            <p style = {{margin: 0, color: 'white'}}>Elevation</p>
+            <p style = {{margin: 0, color: 'white'}}>{intel.coordinateX}</p>
+            <p style = {{margin: 0, color: 'white'}}>{intel.coordinateY}</p>
+            <p style = {{margin: 0, color: 'white'}}>Elevation: {intel.elavation}</p>
 
             <p style= {{margin: 0, fontWeight: 'bold', fontSize:18, color: 'white'}}>Bore Holes</p>
-            <ShowBoreHole />
+            {intel.boreHoles.map((item, index)=>
+                <ShowBoreHole 
+                id = {item.id}
+                depth = {item.depth}
+                type= {item.type}
+                essay =  {item.essay}
+                key = {index}
+                />
+            )}
+            
         </TabPanel>
-        <TabPanel value="2">Item Two</TabPanel>
+        <TabPanel value="2"></TabPanel>
         <TabPanel value="3">
         <iframe 
-        src="https://embed.waze.com/iframe?zoom=10&lat=-26.208739&lon=28.433647&ct=livemap" 
+        src= {source}
         width="100%" height="450" allowfullscreen>
         </iframe>
         </TabPanel>

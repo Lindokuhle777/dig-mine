@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import Card from './card';
+import React, { useEffect, useState } from 'react';
+import Card from './Card';
 import Button from '@mui/material/Button';
 import ViewPackage from './ViewPackage';
 import Fab from '@mui/material/Fab';
@@ -21,12 +21,30 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import axios from 'axios';
+import { CircularProgress } from '@mui/material';
+import { useContext } from 'react';
+import { AuthContext } from "../../Authentication";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
 function Package() {
+
+  const {user} = useContext(AuthContext);
+  const [packages, setPackages] = useState([]);
+  const [intel, setIntel] = useState({});
+ 
+  useEffect(()=>{
+    const getList =async()=>{
+      await axios.get('https://enigmatic-island-35216.herokuapp.com/packages/getPackages/')
+      .then((response)=>{
+        setPackages(response.data);
+      });
+    };
+
+    getList();
+  }, []);
 
   const [isView, setIsView] = useState(false);
   const [open, setOpen] = React.useState(false);
@@ -66,6 +84,8 @@ function Package() {
     // submit to rest...
     axios.post('https://enigmatic-island-35216.herokuapp.com/packages/addPackage/', {
         mineName: mineName,
+        title: packageT,
+        likes: 0,
         nearestTown: town,
         status: 'Operational',
         coordinateX: lat,
@@ -75,8 +95,8 @@ function Package() {
         airQuality: air,
         production: prod,
         boreHoles: boreHoles,
-        username: 'Given',
-        email: 'given@mail.com',
+        username: user.displayName,
+        email: user.email,
     });
 
     setAir('');
@@ -119,13 +139,28 @@ function Package() {
         <div>
         <p style = {{margin: 0, fontSize: 28, color: 'white'}}>Packages</p>
         <p style = {{margin: 0, fontSize: 15, color: 'white'}}>Explore, analyze, and share quality data.</p>
-        <Card />
+        <div style={{display: 'flex', flexDirection: 'row', flexWrap: 'wrap'}}>
+        {packages.map((item, index)=>
+            <Card
+            key={index}
+            data = {item}
+            setView = {setIsView}
+            setIntel = {setIntel}
+            />
+          )}
+        </div>
+        
+          {packages.length == 0 &&
+            <div style = {{alignSelf: 'center', display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
+               <CircularProgress />
+            </div>
+          }
         </div>
         :
-        <ViewPackage />
+        <ViewPackage intel = {intel}/>
       }
       <div style = {styles.FAB}>
-      <Fab variant="extended" size="medium" color="primary" aria-label="add" onClick={handleClickOpen}>
+      <Fab variant="extended" size="medium" aria-label="add" onClick={handleClickOpen} style = {{background: '#f4c870'}}>
         <AddIcon sx={{ mr: 1 }} />
         Add Package
       </Fab>
@@ -179,7 +214,7 @@ function Package() {
         <TextField variant="standard" value={air} onChange = {(e)=> setAir(e.target.value)}/>
 
         <div style = {styles.FAB}>
-        <Fab variant="extended" size="medium" color="primary" aria-label="add" onClick = {()=> handleClickOpenB()}>
+        <Fab variant="extended" size="medium" aria-label="add" onClick = {()=> handleClickOpenB()} style = {{background: '#f4c870'}}>
         <AddIcon sx={{ mr: 1 }} />
         Add BoreHole
       </Fab>
@@ -216,6 +251,8 @@ function Package() {
 
 const styles = {
   Main:{
+    display: 'flex',
+    flexDirection: 'column',
     marginLeft: 50
   },
   FAB:{
