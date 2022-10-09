@@ -86,23 +86,15 @@ export const AuthContextProvider = ({ children }) => {
 
   const getPost = (id) => {
     // con
+    if(user === null) { return;}
 
     for (var i = 0; i < posts.length; i++) {
-      // console.log(id);
-      // console.log(posts[i].postId);
       if (posts[i].postId == id) {
-        // console.log("hi")
-        const func = () => {
-          // setValue(0);
-          // setIsFeed(false);
-          // console.log("Hello")
-        };
         let temp = { post: posts[i] };
         temp.url = url;
-        temp.handleIsfeed = func;
+        // temp.handleIsfeed = func;
         temp.userEmail = user.email;
         temp.index = i;
-        // console.log(temp);
         return temp;
       };
     }
