@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react';
 import { Typography, Button } from "@mui/material";
 import FeedCard from '../Feed/FeedCard';
-import Card from '../Packages/card';
+import Card from '../Packages/Card';
 import { AuthContext } from "../../Authentication";
 
 const tagStyle = {

@@ -61,7 +61,7 @@ function Discussions({ post }) {
 			username: user.displayName
 		}
 		axios.post(`${url}/posts/addReply`, data).then(res => {
-			console.log(res.data);
+			// console.log(res.data);
 			document.getElementById("reply").value = "";
 		}).catch(err => {
 

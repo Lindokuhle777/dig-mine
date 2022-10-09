@@ -17,7 +17,7 @@ function FeedCard({ post, userEmail, handleIsfeed, index }) {
 
     const [like, setLike] = useState(false);
     const [numLikes, setNumLikes] = useState(0);
-    const { setPosts, posts,url } = useContext(AuthContext);
+    const { setPosts, posts, url, googleSignIn, user } = useContext(AuthContext);
 
     useEffect(() => {
         if (post.likes?.includes(userEmail)) {
@@ -28,8 +28,8 @@ function FeedCard({ post, userEmail, handleIsfeed, index }) {
     }, []);
 
     const handleLike = () => {
-        // console.log({ postId: post.postId, likerId: userEmail });
-        // likerId, postId
+        if (user === null) { googleSignIn(); return; }
+
         axios.post(`${url}/posts/like`, { postId: post.postId, likerId: userEmail });
         if (like) {
             setNumLikes(numLikes - 1);
@@ -49,7 +49,7 @@ function FeedCard({ post, userEmail, handleIsfeed, index }) {
                     temp.push(item);
                 }
             });
-            console.log(temp)
+            // console.log(temp)
             setPosts(temp);
 
         } else {
@@ -70,7 +70,7 @@ function FeedCard({ post, userEmail, handleIsfeed, index }) {
                     temp.push(item);
                 }
             });
-            console.log(temp);
+            // console.log(temp);
             setPosts(temp);
         }
 

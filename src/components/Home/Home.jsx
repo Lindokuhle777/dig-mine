@@ -59,7 +59,7 @@ export default function VerticalTabs() {
   //   setValue(newValue);
   // };
 
-  
+
 
   return (
     <div
@@ -77,9 +77,11 @@ export default function VerticalTabs() {
           aria-label="Vertical tabs example"
           style={{ position: 'absolute', margin: 0, left: 0, width: "100%", height: "100vh" }}
         >
-          <Tab label="Home" {...a11yProps(0)} />
-          <Tab label="Packages" {...a11yProps(1)} />
-          <Tab label="Tags" {...a11yProps(2)} />
+          <div style={{ backgroundColor: "#404755" ,color:value===0?"white":"#f4c870"}} onClick={(event)=>{handleChange(event,0)}}><Tab label="Home" {...a11yProps(0)} /></div>
+          <div style={{ backgroundColor: "#404755" ,color:value===1?"white":"#f4c870"}} onClick={(event)=>{handleChange(event,1)}}><Tab label="Packages" {...a11yProps(1)} /></div>
+          <div style={{ backgroundColor: "#404755" ,color:value===2?"white":"#f4c870"}} onClick={(event)=>{handleChange(event,2)}}><Tab label="Tags" {...a11yProps(2)} /></div>
+
+
         </Tabs>
 
 

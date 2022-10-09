@@ -8,18 +8,20 @@ import axios from "axios";
 import { AuthContext } from "../../Authentication";
 
 
-function Feed({isFeed,setIsFeed}) {
+function Feed({ isFeed, setIsFeed }) {
   const [open, setOpen] = React.useState(false);
-  const { url, user, getPosts, posts,currPost, setCurrPost } = useContext(AuthContext);
-  
- 
+  const { url, user, getPosts, posts, currPost, setCurrPost, googleSignIn } = useContext(AuthContext);
+
+
 
   useEffect(() => {
     // getPosts();
   }, []);
 
   const handleClickOpen = () => {
-    setOpen(true);
+    if (user === null) { googleSignIn(); }
+    else { setOpen(true); }
+
   };
 
   const handleClose = () => {
@@ -58,7 +60,7 @@ function Feed({isFeed,setIsFeed}) {
       username: user.displayName
     }
 
-    console.log(data);
+    // console.log(data);
 
     await axios.post(`${url}/posts/addPost`, data).then(res => {
       console.log(res?.data);

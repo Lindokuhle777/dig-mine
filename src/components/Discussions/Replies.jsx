@@ -13,23 +13,27 @@ const paperSty = {
     marginBottom: "20px",
 }
 
-function Replies({ post,replies,setReplies}) {
+function Replies({ post, replies, setReplies }) {
 
     const [like, setLike] = useState(false);
     const [numLikes, setNumLikes] = useState(0);
-    const { user,url } = useContext(AuthContext);
+    const { user, url, googleSignIn } = useContext(AuthContext);
 
     useEffect(() => {
-        if (post.likes?.includes(user.email)) {
-            setLike(true);
-            // post.likes === undefined ? setNumLikes(0) : post.likes.length;
-            setNumLikes(post.likes === undefined ? setNumLikes(0) : post.likes.length);
+        if (user !== null) {
+            if (post.likes?.includes(user?.email)) {
+                setLike(true);
+                setNumLikes(post.likes === undefined ? setNumLikes(0) : post.likes.length);
+            }
         }
+
     }, []);
 
     const handleLike = () => {
         // console.log({ postId: post.postId, likerId: userEmail });
         // likerId, postId
+
+        if (user === null) { googleSignIn(); return; }
         axios.post(`${url}/posts/like`, { postId: post.postId, likerId: user.email });
         if (like) {
             setNumLikes(numLikes - 1);

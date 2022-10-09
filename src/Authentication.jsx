@@ -16,11 +16,10 @@ export const AuthContextProvider = ({ children }) => {
   const [value, setValue] = React.useState(0);
   const [currPost, setCurrPost] = useState(null);
   const [isFeed, setIsFeed] = React.useState(true);
-  const url = "http://localhost:5000";
+  const url = "https://enigmatic-island-35216.herokuapp.com";
   const [user, setUser] = useState(null);
   const [posts, setPosts] = useState([]);
-  // const [value, setValue] = useState(0);
-  // const [isFeed, setIsFeed] = useState(true);
+
 
   const googleSignIn = async () => {
     const provider = new GoogleAuthProvider();
@@ -81,7 +80,7 @@ export const AuthContextProvider = ({ children }) => {
       const tt =
         setPosts(filter(searchF.value));
     }
-    else { getPosts();console.log("not searching") }
+    else { getPosts(); }
 
   }
 
