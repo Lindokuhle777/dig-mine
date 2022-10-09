@@ -52,7 +52,8 @@ const styles = {
         background: '#21282f',
         borderRadius: 15,
         minWidth: 260,
-        width: 260
+        width: 260,
+        marginLeft: 15
     },
     Content:{
         display: 'flex',
