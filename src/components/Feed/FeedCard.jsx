@@ -13,11 +13,11 @@ const paperSty = {
     marginBottom: "20px",
 }
 
-function FeedCard({ post, userEmail, url, handleIsfeed, index }) {
+function FeedCard({ post, userEmail, handleIsfeed, index }) {
 
     const [like, setLike] = useState(false);
     const [numLikes, setNumLikes] = useState(0);
-    const { setPosts, posts } = useContext(AuthContext);
+    const { setPosts, posts,url } = useContext(AuthContext);
 
     useEffect(() => {
         if (post.likes?.includes(userEmail)) {
@@ -28,7 +28,7 @@ function FeedCard({ post, userEmail, url, handleIsfeed, index }) {
     }, []);
 
     const handleLike = () => {
-        console.log({ postId: post.postId, likerId: userEmail });
+        // console.log({ postId: post.postId, likerId: userEmail });
         // likerId, postId
         axios.post(`${url}/posts/like`, { postId: post.postId, likerId: userEmail });
         if (like) {

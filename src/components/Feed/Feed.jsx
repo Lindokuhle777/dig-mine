@@ -10,9 +10,9 @@ import { AuthContext } from "../../Authentication";
 
 function Feed({isFeed,setIsFeed}) {
   const [open, setOpen] = React.useState(false);
-  const { url, user, getPosts, posts } = useContext(AuthContext);
+  const { url, user, getPosts, posts,currPost, setCurrPost } = useContext(AuthContext);
   
-  const [currPost, setCurrPost] = useState(null);
+ 
 
   useEffect(() => {
     // getPosts();

@@ -6,6 +6,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import CssTextField from './CsstextField';
 import { AuthContext } from '../Authentication';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 
 const btnStyle = {
     background: '#21282f', color: "white", border: "0px solid black", marginRight: "10px"
@@ -13,7 +14,7 @@ const btnStyle = {
 
 export default function MenuAppBar() {
 
-    const { user, googleSignIn,logOut } = useContext(AuthContext);
+    const { user, googleSignIn, logOut, searchFeed, getPosts, isFeed, setIsFeed } = useContext(AuthContext);
     const [anchorEl, setAnchorEl] = React.useState(null);
     const open = Boolean(anchorEl);
     const handleClick = (event) => {
@@ -24,13 +25,34 @@ export default function MenuAppBar() {
         logOut();
     };
 
+    const onChange = (event) => {
+        searchFeed();
+        // console.log(event.target.value);
+        if (event.target.value === ' ' || event.target.value === "") {
+            getPosts();
+        }
+
+    }
+
+
+
     return (
 
         <AppBar position="sticky" style={{ backgroundColor: '#21282f' }} >
             <Toolbar>
 
+                {
+                    !isFeed && <IconButton onClick={() => { setIsFeed(true) }}>
+                        <ArrowBackIosIcon style={{ color: "white" }} />
+                    </IconButton>
+                }
+
+
+
                 <CssTextField
                     size="small"
+                    id="search"
+                    onChange={onChange}
                     style={{ margin: "10px 20px", backgroundColor: "#787a7c", color: "#fff" }}
                     placeholder="Search"
                     InputProps={{
@@ -48,7 +70,7 @@ export default function MenuAppBar() {
                         user === null &&
                         <>
                             <Button size="small" style={btnStyle} onClick={googleSignIn}>Login</Button>
-                            {/* <Button size="small" style={btnStyle}>Sign up</Button> */}
+
                         </>
                     }
 
@@ -69,7 +91,7 @@ export default function MenuAppBar() {
                                     'aria-labelledby': 'basic-button',
                                 }}
                             >
-                                <MenuItem onClick={handleClose}>Profile</MenuItem>
+                                <MenuItem onClick={handleClose}>Log out</MenuItem>
                             </Menu></>
 
                     }

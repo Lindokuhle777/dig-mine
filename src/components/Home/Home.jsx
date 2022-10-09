@@ -9,6 +9,7 @@ import Package from '../Packages/Package';
 import { Toolbar, AppBar, Button, Divider } from '@mui/material';
 import SearchAppBar from '../SearchAppBar';
 import Tags from '../Tags/Tags';
+import { AuthContext } from "../../Authentication";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -22,9 +23,9 @@ function TabPanel(props) {
       {...other}
     >
       {value === index && (
-        <Box style={{ position: 'absolute', left: "20%", backgroundColor: '#404755', height: "100vh",width: "80%",overflowY:"auto"}}>
+        <Box style={{ position: 'absolute', left: "20%", backgroundColor: '#404755', height: "100vh", width: "80%", overflowY: "auto" }}>
           <div>
-            <SearchAppBar/>
+            <SearchAppBar />
             {children}
           </div>
         </Box>
@@ -49,26 +50,24 @@ function a11yProps(index) {
 
 
 export default function VerticalTabs() {
-  const [value, setValue] = React.useState(0);
-  const [isFeed, setIsFeed] = React.useState(true);
 
-  const handleChange = (event, newValue) => {
-    console.log(newValue);
-    if(newValue===0) setIsFeed(true);
-    setValue(newValue);
-  };
+  const { value, isFeed, setIsFeed, handleChange } = React.useContext(AuthContext);
 
-  const openOne = (curr)=>{
+  // const handleChange = (event, newValue) => {
+  //   // console.log(newValue);
+  //   if(newValue===0) setIsFeed(true);
+  //   setValue(newValue);
+  // };
 
-  }
+  
 
   return (
     <div
-    style={{ backgroundColor:"#787a7c"}}
+      style={{ backgroundColor: "#787a7c" }}
     >
-      <div style={{ position: 'fixed', margin: 0, left: 0, width: "19.9%", backgroundColor: '#404755', height: "100vh"}}>
+      <div style={{ position: 'fixed', margin: 0, left: 0, width: "19.9%", backgroundColor: '#404755', height: "100vh" }}>
         <div style={{ display: 'flex', flexDirection: 'row' }}>
-          <Typography variant='h4' style={{color:"#f4c870"}}>Mining Exchange</Typography>
+          <Typography variant='h4' style={{ color: "#f4c870", margin: "10px" }}>Mining Exchange</Typography>
         </div>
 
         <Tabs
@@ -78,23 +77,23 @@ export default function VerticalTabs() {
           aria-label="Vertical tabs example"
           style={{ position: 'absolute', margin: 0, left: 0, width: "100%", height: "100vh" }}
         >
-          <Tab label="Home" {...a11yProps(0)}/>
+          <Tab label="Home" {...a11yProps(0)} />
           <Tab label="Packages" {...a11yProps(1)} />
           <Tab label="Tags" {...a11yProps(2)} />
         </Tabs>
-        
-        
+
+
       </div>
-        
+
 
       <TabPanel value={value} index={0}>
-        <Feed isFeed={isFeed} setIsFeed={setIsFeed}/>
+        <Feed isFeed={isFeed} setIsFeed={setIsFeed} />
       </TabPanel>
       <TabPanel value={value} index={1}>
         <Package />
       </TabPanel>
       <TabPanel value={value} index={2}>
-        <Tags/>
+        <Tags />
       </TabPanel>
 
     </div>
