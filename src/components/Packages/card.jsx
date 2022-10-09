@@ -28,7 +28,7 @@ const Card = ({data, setView, setIntel}) => {
             <img src= {image} alt="Icon" width={260} height = {150} style = {{borderTopLeftRadius: 15, borderTopRightRadius: 15}} onClick = {()=> onView()}/>
             <div style = {styles.Content}>
             <p style = {{margin: 0, color: 'white'}}>{data.title}</p>
-            <p style = {{margin: 0, color: 'white', fontSize: 10, marginTop: 2}}>Last updated 12/06/2022</p>
+            <p style = {{margin: 0, color: 'white', fontSize: 10, marginTop: 2}}>Last updated 09/10/2022</p>
 
             <div style = {{display: 'flex', flexDirection: 'row', alignItems: 'center', marginTop: 5, justifyContent: 'space-between'}}>
             
